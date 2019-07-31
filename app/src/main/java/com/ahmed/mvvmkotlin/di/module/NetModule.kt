@@ -5,6 +5,7 @@ import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import dagger.Module
 import dagger.Provides
 import okhttp3.Cache
 import okhttp3.OkHttpClient
@@ -13,12 +14,14 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.concurrent.TimeUnit
+import javax.inject.Named
 import javax.inject.Singleton
 
 /**
  * Created by Ahmed Younis on 7/27/2019.
  */
-class NetModule(private val mBaseUrl: String) {
+@Module
+class NetModule() {
 
     @Provides
     @Singleton
@@ -53,12 +56,12 @@ class NetModule(private val mBaseUrl: String) {
 
     @Provides
     @Singleton
-    internal fun provideRetrofit(gson: Gson,okHttpClient: OkHttpClient) : Retrofit{
+    internal fun provideRetrofit(gson: Gson,okHttpClient: OkHttpClient,@Named("baseUrl")baseUrl:String) : Retrofit{
         return Retrofit.Builder()
             .addConverterFactory(ScalarsConverterFactory.create())
             .addConverterFactory(GsonConverterFactory.create(gson))
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .baseUrl(mBaseUrl)
+            .baseUrl(baseUrl)
             .client(okHttpClient)
             .build()
     }
