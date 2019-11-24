@@ -81,7 +81,7 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
 
     fun hideLoading() {
         if (mProgressDialog != null && mProgressDialog!!.isShowing) {
-            mProgressDialog!!.cancel()
+            mProgressDialog?.cancel()
         }
     }
 
@@ -109,8 +109,8 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
     private fun performDataBinding() {
         viewDataBinding = DataBindingUtil.setContentView(this, layoutId())
         this.mViewModel = if (mViewModel == null) viewModel() else mViewModel
-        viewDataBinding!!.setVariable(bindingVariable(), mViewModel)
-        viewDataBinding!!.executePendingBindings()
+        viewDataBinding?.setVariable(bindingVariable(), mViewModel)
+        viewDataBinding?.executePendingBindings()
     }
 }
 

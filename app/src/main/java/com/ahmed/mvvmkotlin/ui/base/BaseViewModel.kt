@@ -20,10 +20,10 @@ abstract class BaseViewModel<N>(val dataManager: DataManager,
 
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
-    private var mNavigator: WeakReference<N>? = null
+    private lateinit var mNavigator: WeakReference<N?>
 
-    var navigator: N
-        get() = mNavigator!!.get()!!
+    var navigator: N?
+        get() = mNavigator.get()
         set(navigator) {
             this.mNavigator = WeakReference(navigator)
         }

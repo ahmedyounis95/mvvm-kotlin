@@ -12,6 +12,6 @@ class SplashViewModel(dataManager: DataManager, schedulerProvider: SchedulerProv
 
 
     private fun decideNextActivity() {
-        navigator.openMainActivity()
+        navigator?.openMainActivity()
     }
 }

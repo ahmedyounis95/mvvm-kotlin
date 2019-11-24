@@ -51,7 +51,7 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel<*>> : Fragmen
         if (context is BaseActivity<*, *>) {
             val activity = context as BaseActivity<*, *>?
             this.baseActivity = activity
-            activity!!.onFragmentAttached()
+            activity?.onFragmentAttached()
         }
     }
 
@@ -64,7 +64,7 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel<*>> : Fragmen
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         viewDataBinding = DataBindingUtil.inflate(inflater, layoutId, container, false)
-        mRootView = viewDataBinding!!.root
+        mRootView = viewDataBinding?.root
         return mRootView
     }
 
@@ -75,20 +75,20 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel<*>> : Fragmen
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewDataBinding!!.setVariable(bindingVariable, mViewModel)
-        viewDataBinding!!.lifecycleOwner = this
-        viewDataBinding!!.executePendingBindings()
+        viewDataBinding?.setVariable(bindingVariable, mViewModel)
+        viewDataBinding?.lifecycleOwner = this
+        viewDataBinding?.executePendingBindings()
     }
 
     fun hideKeyboard() {
         if (baseActivity != null) {
-            baseActivity!!.hideKeyboard()
+            baseActivity?.hideKeyboard()
         }
     }
 
     fun openActivityOnTokenExpire() {
         if (baseActivity != null) {
-            baseActivity!!.openActivityOnTokenExpire()
+            baseActivity?.openActivityOnTokenExpire()
         }
     }
 

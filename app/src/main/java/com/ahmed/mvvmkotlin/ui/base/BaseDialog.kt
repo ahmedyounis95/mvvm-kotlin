@@ -16,16 +16,16 @@ import androidx.fragment.app.FragmentManager
  */
 abstract class BaseDialog : DialogFragment() {
     var baseActivity: BaseActivity<*, *>? = null
-        private set
+
     val isNetworkConnected: Boolean
         get() = baseActivity != null && baseActivity!!.isNetworkConnected
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is BaseActivity<*, *>) {
             val mActivity = context as BaseActivity<*, *>?
             this.baseActivity = mActivity
-            mActivity!!.onFragmentAttached()
+            mActivity?.onFragmentAttached()
 
         }
     }
@@ -35,12 +35,12 @@ abstract class BaseDialog : DialogFragment() {
         root.layoutParams = ViewGroup.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT)
-        val dialog = Dialog(context!!)
+        val dialog = Dialog(context)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(root)
         if (dialog.window != null) {
-            dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            dialog.window!!.setLayout(
+            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            dialog.window?.setLayout(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
             )
@@ -66,30 +66,30 @@ abstract class BaseDialog : DialogFragment() {
 
     fun dismissDialog(tag: String) {
         dismiss()
-        baseActivity!!.onFragmentDetached(tag)
+        baseActivity?.onFragmentDetached(tag)
     }
 
     fun hideKeyboard() {
         if (baseActivity != null) {
-            baseActivity!!.hideKeyboard()
+            baseActivity?.hideKeyboard()
         }
     }
 
     fun hideLoading() {
         if (baseActivity != null) {
-            baseActivity!!.hideLoading()
+            baseActivity?.hideLoading()
         }
     }
 
     fun openActivityOnTokenExpire() {
         if (baseActivity != null) {
-            baseActivity!!.openActivityOnTokenExpire()
+            baseActivity?.openActivityOnTokenExpire()
         }
     }
 
     fun showLoading() {
         if (baseActivity != null) {
-            baseActivity!!.showLoading()
+            baseActivity?.showLoading()
         }
     }
 }

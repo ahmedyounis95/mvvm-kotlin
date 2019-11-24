@@ -33,7 +33,7 @@ object CommonUtils {
         return Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
     }
 
-    fun getDate(date: String): String {
+    fun getDate(date: String?): String {
         var timeString = ""
         val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH)
 

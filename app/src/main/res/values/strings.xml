@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">MvvmKotlin</string>
+    <string name="title">Title</string>
+    <string name="news">News</string>
+    <string name="favorites">Favorites</string>
+    <string name="empty_screen">No news available</string>
+    <string name="please_retry">Please try again</string>
+    <string name="retry">Retry</string>
+    <string name="news_img">News Img</string>
+    <string name="mark_as_favorite">Mark as favorite</string>
+    <string name="no_news_image">No news image</string>
 </resources>

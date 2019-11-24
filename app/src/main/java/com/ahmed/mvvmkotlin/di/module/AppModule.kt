@@ -4,6 +4,8 @@ import android.app.Application
 import android.content.Context
 import com.ahmed.mvvmkotlin.data.AppDataManager
 import com.ahmed.mvvmkotlin.data.DataManager
+import com.ahmed.mvvmkotlin.data.remote.ApiHelper
+import com.ahmed.mvvmkotlin.data.remote.AppApiHelper
 import com.ahmed.mvvmkotlin.utils.rx.AppSchedulerProvider
 import com.ahmed.mvvmkotlin.utils.rx.SchedulerProvider
 import dagger.Module
@@ -33,6 +35,12 @@ class AppModule() {
     @Provides
     internal fun provideSchedulerProvider(): SchedulerProvider = AppSchedulerProvider()
 
+
+    @Provides
+    @Singleton
+    internal fun provideApiHelper(appApiHelper: AppApiHelper): ApiHelper {
+        return appApiHelper
+    }
 
 
 }

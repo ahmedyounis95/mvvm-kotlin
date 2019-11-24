@@ -1,5 +1,6 @@
 package com.ahmed.mvvmkotlin.ui.splash
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProviders
 import com.ahmed.mvvmkotlin.BR
@@ -7,6 +8,7 @@ import com.ahmed.mvvmkotlin.R
 import com.ahmed.mvvmkotlin.ViewModelProviderFactory
 import com.ahmed.mvvmkotlin.databinding.ActivitySplashBinding
 import com.ahmed.mvvmkotlin.ui.base.BaseActivity
+import com.ahmed.mvvmkotlin.ui.feed.FeedActivity
 import javax.inject.Inject
 
 /**
@@ -16,6 +18,7 @@ import javax.inject.Inject
 class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>(), SplashNavigator {
 
     //To change initializer of created properties use File | Settings | File Templates.
+
 
     @set:Inject
     internal var factory: ViewModelProviderFactory? = null
@@ -30,22 +33,22 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>(), S
     }
 
     override fun viewModel(): SplashViewModel {
-        mSplashViewModel = ViewModelProviders.of(this, factory).get(SplashViewModel::class.java!!)
+        mSplashViewModel = ViewModelProviders.of(this, factory).get(SplashViewModel::class.java)
         return mSplashViewModel as SplashViewModel
 
     }
 
     override fun openMainActivity() {
-//        val intent = MainActivity.newIntent(this@SplashActivity)
-//
-//        startActivity(intent)
-//        finish()
+        val intent = Intent(this, FeedActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mSplashViewModel!!.navigator = this
+        mSplashViewModel?.navigator = this
         performDependencyInjection()
 //        mSplashViewModel!!.startSeeding()
+        openMainActivity()
     }
 }
