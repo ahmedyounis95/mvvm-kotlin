@@ -25,6 +25,7 @@
                 style="@style/Toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                    android:minHeight="?attr/actionBarSize"
                 app:subtitleTextColor="@color/white"
                 app:title="@string/title"
                 app:titleTextAppearance="@style/Toolbar.TitleText"
@@ -37,6 +38,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/colorPrimary"
                 app:tabGravity="fill"
+                    app:tabMaxWidth="0dp"
                 app:tabIndicatorColor="@color/white" />
 
         </com.google.android.material.appbar.AppBarLayout>

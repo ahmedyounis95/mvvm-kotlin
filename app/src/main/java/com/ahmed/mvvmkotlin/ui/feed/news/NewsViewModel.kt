@@ -30,7 +30,8 @@ class NewsViewModel(dataManager: DataManager, schedulerProvider: SchedulerProvid
             .observeOn(schedulerProvider.ui())
             .subscribe({ news ->
                 if (news != null && news.body()?.articles != null) {
-                    newsItemsLiveData.value = news.body()?.articles
+                    dataManager.insertNews(news.body()?.articles!!)
+                    newsItemsLiveData.value = dataManager.allNews
                 }
                 setIsLoading(false)
             }, { throwable ->

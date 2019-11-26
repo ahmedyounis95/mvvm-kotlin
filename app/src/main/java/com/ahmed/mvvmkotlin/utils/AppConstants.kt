@@ -16,6 +16,8 @@ object AppConstants {
 
     const val BASE_URLS = "https://newsapi.org/"
 
+    const val NEWS_TABLE_NAME = "news"
+
     const val STATUS_CODE_FAILED = "failed"
 
     const val STATUS_CODE_SUCCESS = "success"

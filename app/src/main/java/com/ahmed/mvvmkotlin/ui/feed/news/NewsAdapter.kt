@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.net.sip.SipSession
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ahmed.mvvmkotlin.data.model.Articles
@@ -19,6 +20,7 @@ class NewsAdapter(private val mArticlesList: MutableList<Articles>) :
     RecyclerView.Adapter<BaseViewHolder>() {
 
     private var mListener: NewsAdapterListener? = null
+    private var checkboxOnItemSelectedListener: CheckboxOnItemSelectedListener? = null
 
 
     override fun getItemCount(): Int {
@@ -78,6 +80,9 @@ class NewsAdapter(private val mArticlesList: MutableList<Articles>) :
         this.mListener = listener
     }
 
+    fun setCheckboxOnItemSelectedListener(checkboxOnItemSelectedListener: CheckboxOnItemSelectedListener) {
+        this.checkboxOnItemSelectedListener = checkboxOnItemSelectedListener
+    }
     interface NewsAdapterListener {
 
         fun onRetryClick()
@@ -104,6 +109,30 @@ class NewsAdapter(private val mArticlesList: MutableList<Articles>) :
             this.mNewsItemViewModel = NewsItemViewModel(mNewsItemViewModel, this)
             mBinding.viewModel = this.mNewsItemViewModel
 
+            if(mNewsItemViewModel.isChecked){
+                mBinding.favoriteCheckBox.isChecked = true
+            }else if(!mNewsItemViewModel.isChecked){
+                mBinding.favoriteCheckBox.isChecked = false
+            }
+            mBinding.favoriteCheckBox.setOnClickListener {
+                if (mBinding.favoriteCheckBox.isChecked) {
+                    mNewsItemViewModel.isChecked = true
+                    mBinding.favoriteCheckBox.isChecked = true
+                    if (checkboxOnItemSelectedListener != null) {
+                        checkboxOnItemSelectedListener?.onItemSelected(
+                            mArticlesList[position], true
+                        )
+                    }
+                } else if (!mBinding.favoriteCheckBox.isChecked) {
+                    mNewsItemViewModel.isChecked = false
+                    mBinding.favoriteCheckBox.isChecked = false
+                    if (checkboxOnItemSelectedListener != null) {
+                        checkboxOnItemSelectedListener?.onItemSelected(
+                            mArticlesList[position], false
+                        )
+                    }
+                }
+            }
             // Immediate Binding
             // When a variable or observable changes, the binding will be scheduled to change before
             // the next frame. There are times, however, when binding must be executed immediately.

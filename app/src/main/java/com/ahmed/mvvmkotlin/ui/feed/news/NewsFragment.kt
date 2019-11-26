@@ -1,6 +1,7 @@
 package hcww.mvvm.ayounis.com.mvvmproject.ui.feed.news
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -9,8 +10,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ahmed.mvvmkotlin.BR
 import com.ahmed.mvvmkotlin.R
 import com.ahmed.mvvmkotlin.ViewModelProviderFactory
+import com.ahmed.mvvmkotlin.data.model.Articles
 import com.ahmed.mvvmkotlin.databinding.FragmentNewsBinding
 import com.ahmed.mvvmkotlin.ui.base.BaseFragment
+import com.ahmed.mvvmkotlin.ui.feed.news.CheckboxOnItemSelectedListener
 import com.ahmed.mvvmkotlin.ui.feed.news.NewsAdapter
 import com.ahmed.mvvmkotlin.ui.feed.news.NewsNavigator
 import com.ahmed.mvvmkotlin.ui.feed.news.NewsViewModel
@@ -32,12 +35,12 @@ class NewsFragment : BaseFragment<FragmentNewsBinding, NewsViewModel>(), NewsNav
     internal lateinit var factory: ViewModelProviderFactory
 
     private var mNewsViewModel: NewsViewModel? = null
-    private val paginator = PublishProcessor.create<Int>()
     private var loading = false
-    private val pageNumber = 1
     private val VISIBLE_THRESHOLD = 1
     private var lastVisibleItem: Int = 0
     private var totalItemCount: Int = 0
+    private var checkboxOnItemSelectedListener: CheckboxOnItemSelectedListener? = null
+
 
     override val bindingVariable: Int
         get() = BR.viewModel
@@ -60,6 +63,8 @@ class NewsFragment : BaseFragment<FragmentNewsBinding, NewsViewModel>(), NewsNav
         super.onCreate(savedInstanceState)
         mNewsViewModel?.navigator = this
         mNewsAdapter.setListener(this)
+        checkboxOnItemSelectedListener?.let { mNewsAdapter.setCheckboxOnItemSelectedListener(it) }
+
     }
 
     override fun onRetryClick() {
@@ -77,6 +82,20 @@ class NewsFragment : BaseFragment<FragmentNewsBinding, NewsViewModel>(), NewsNav
         mFragmentNewsBinding?.newsRecyclerView?.layoutManager = mLayoutManager
         mFragmentNewsBinding?.newsRecyclerView?.itemAnimator = DefaultItemAnimator()
         mFragmentNewsBinding?.newsRecyclerView?.adapter = mNewsAdapter
+        checkboxOnItemSelectedListener =
+            CheckboxOnItemSelectedListener { articles, checked ->
+                if (checked) {
+                    mNewsViewModel?.dataManager?.updateFavorites(checked,articles.id)
+                    Log.e("data inserted", "success")
+                } else {
+
+                    mNewsViewModel?.dataManager?.updateFavorites(checked,articles.id)
+                    Log.e("data removed", "success")
+
+                }
+            }
+        checkboxOnItemSelectedListener?.let { mNewsAdapter.setCheckboxOnItemSelectedListener(it) }
+
 //        setUpLoadMoreListener()
 
 
